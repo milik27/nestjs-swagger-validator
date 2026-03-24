@@ -36,7 +36,7 @@ function ApiProperty(options: ApiPropertyOptions): PropertyDecorator {
   ];
 
   if (options.type === 'string' && !options.format) {
-    decorators.push(IsString({ each: options.isArray }));
+    decorators.push(IsString({ each: options.isArray, message: options.typeMessage }));
 
     if (options.isEmail) {
       decorators.push(IsEmail(undefined, { each: options.isArray, message: getMessage(options.isEmail) }));
@@ -65,7 +65,7 @@ function ApiProperty(options: ApiPropertyOptions): PropertyDecorator {
 
   if (options.type === 'number') {
     decorators.push(Type(() => Number));
-    decorators.push(IsNumber({}, { each: options.isArray }));
+    decorators.push(IsNumber({}, { each: options.isArray, message: options.typeMessage }));
 
     if (options.isPositive) {
       decorators.push(IsPositive({ each: options.isArray, message: getMessage(options.isPositive) }));
@@ -77,11 +77,11 @@ function ApiProperty(options: ApiPropertyOptions): PropertyDecorator {
   }
 
   if (options.type === 'boolean') {
-    decorators.push(IsBoolean({ each: options.isArray }));
+    decorators.push(IsBoolean({ each: options.isArray, message: options.typeMessage }));
   }
 
   if (options.type === 'object') {
-    decorators.push(IsObject({ each: options.isArray }));
+    decorators.push(IsObject({ each: options.isArray, message: options.typeMessage }));
   }
 
   if ('enum' in options && options.enum) {

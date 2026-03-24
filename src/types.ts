@@ -4,6 +4,7 @@ export type MessageOption = boolean | { message?: string };
 export type NumberMessageOption = number | { value: number; message?: string };
 
 type BaseOptions = Omit<ApiPropertyOptionsSwagger, 'type' | 'minLength' | 'maxLength'> & {
+  typeMessage?: string;
   isNotEmpty?: MessageOption;
   typeClass?: any;
   validateNested?: boolean;

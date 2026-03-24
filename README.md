@@ -69,6 +69,9 @@ birthDate: string;
 
 @ApiProperty({ type: 'string', minLength: 8, maxLength: 128 })
 password: string;
+
+@ApiProperty({ type: 'string', matches: /^[a-z0-9-]+$/ })
+slug: string;
 ```
 
 ### Number
@@ -137,6 +140,67 @@ middleName: string | null;
 
 @ApiProperty({ type: 'string', required: false, nullable: true })
 nickname?: string | null;
+```
+
+## Custom Error Messages
+
+Type validators (`IsString`, `IsNumber`, `IsBoolean`, `IsObject`) use `typeMessage`:
+
+```typescript
+@ApiProperty({ type: 'string', typeMessage: 'Must be a string' })
+name: string;
+
+@ApiProperty({ type: 'number', typeMessage: 'Must be a number' })
+age: number;
+
+@ApiProperty({ type: 'boolean', typeMessage: 'Must be true or false' })
+isActive: boolean;
+```
+
+All boolean validators (`isEmail`, `isUrl`, `isPhone`, `isDate`, `isPositive`, `isInt`, `isNotEmpty`) accept an object with a `message` property:
+
+```typescript
+@ApiProperty({
+  type: 'string',
+  isEmail: { message: 'Invalid email format' },
+  isNotEmpty: { message: 'Email is required' },
+})
+email: string;
+
+@ApiProperty({
+  type: 'number',
+  isPositive: { message: 'Must be positive' },
+  isInt: { message: 'Must be an integer' },
+})
+age: number;
+```
+
+Numeric validators (`minLength`, `maxLength`, `arrayMinSize`) accept a `value`/`message` object:
+
+```typescript
+@ApiProperty({
+  type: 'string',
+  minLength: { value: 3, message: 'At least 3 characters' },
+  maxLength: { value: 50, message: 'At most 50 characters' },
+})
+name: string;
+```
+
+Regex matching with a custom message:
+
+```typescript
+@ApiProperty({
+  type: 'string',
+  matches: { pattern: /^[a-z0-9-]+$/, message: 'Must be a valid slug' },
+})
+slug: string;
+```
+
+Enum with a custom message:
+
+```typescript
+@ApiProperty({ enum: Role, enumMessage: 'Must be a valid role' })
+role: Role;
 ```
 
 ## Custom Validators
