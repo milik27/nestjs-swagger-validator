@@ -1,6 +1,6 @@
 {
   "name": "nestjs-swagger-validator",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "All-in-one NestJS decorator combining Swagger documentation and class-validator validation",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
