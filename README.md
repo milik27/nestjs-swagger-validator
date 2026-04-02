@@ -85,6 +85,9 @@ price: number;
 
 @ApiProperty({ type: 'number', isInt: true })
 quantity: number;
+
+@ApiProperty({ type: 'number', min: 0, max: 100 })
+percent: number;
 ```
 
 ### Boolean
@@ -175,7 +178,7 @@ email: string;
 age: number;
 ```
 
-Numeric validators (`minLength`, `maxLength`, `arrayMinSize`) accept a `value`/`message` object:
+Numeric validators (`minLength`, `maxLength`, `arrayMinSize`, `min`, `max`) accept a `value`/`message` object:
 
 ```typescript
 @ApiProperty({
@@ -184,6 +187,13 @@ Numeric validators (`minLength`, `maxLength`, `arrayMinSize`) accept a `value`/`
   maxLength: { value: 50, message: 'At most 50 characters' },
 })
 name: string;
+
+@ApiProperty({
+  type: 'number',
+  min: { value: 0, message: 'Must be at least 0' },
+  max: { value: 100, message: 'Must be at most 100' },
+})
+percent: number;
 ```
 
 Regex matching with a custom message:

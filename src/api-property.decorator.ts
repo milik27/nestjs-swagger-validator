@@ -20,7 +20,9 @@ import {
   IsString,
   IsUrl,
   Matches,
+  Max,
   MaxLength,
+  Min,
   MinLength,
   ValidateNested,
 } from 'class-validator';
@@ -73,6 +75,16 @@ function ApiProperty(options: ApiPropertyOptions): PropertyDecorator {
 
     if (options.isInt) {
       decorators.push(IsInt({ each: options.isArray, message: getMessage(options.isInt) }));
+    }
+
+    if (options.min !== undefined) {
+      const { value, message } = getNumberOption(options.min);
+      decorators.push(Min(value, { each: options.isArray, message }));
+    }
+
+    if (options.max !== undefined) {
+      const { value, message } = getNumberOption(options.max);
+      decorators.push(Max(value, { each: options.isArray, message }));
     }
   }
 

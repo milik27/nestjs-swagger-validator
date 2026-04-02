@@ -26,6 +26,8 @@ export type NumberOptions = BaseOptions & {
   type: 'number';
   isPositive?: MessageOption;
   isInt?: MessageOption;
+  min?: NumberMessageOption;
+  max?: NumberMessageOption;
 };
 
 export type BooleanOptions = BaseOptions & {
