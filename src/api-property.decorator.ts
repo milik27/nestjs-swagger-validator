@@ -8,6 +8,7 @@ import {
   ArrayMinSize,
   IsArray,
   IsBoolean,
+  IsDate,
   IsDateString,
   IsEmail,
   IsEnum,
@@ -21,8 +22,10 @@ import {
   IsUrl,
   Matches,
   Max,
+  MaxDate,
   MaxLength,
   Min,
+  MinDate,
   MinLength,
   ValidateNested,
 } from 'class-validator';
@@ -85,6 +88,27 @@ function ApiProperty(options: ApiPropertyOptions): PropertyDecorator {
     if (options.max !== undefined) {
       const { value, message } = getNumberOption(options.max);
       decorators.push(Max(value, { each: options.isArray, message }));
+    }
+  }
+
+  if (options.type === 'date') {
+    decorators.push(Type(() => Date));
+    decorators.push(IsDate({ each: options.isArray, message: options.typeMessage }));
+
+    if (options.minDate !== undefined) {
+      if (options.minDate instanceof Date) {
+        decorators.push(MinDate(options.minDate, { each: options.isArray }));
+      } else {
+        decorators.push(MinDate(options.minDate.value, { each: options.isArray, message: options.minDate.message }));
+      }
+    }
+
+    if (options.maxDate !== undefined) {
+      if (options.maxDate instanceof Date) {
+        decorators.push(MaxDate(options.maxDate, { each: options.isArray }));
+      } else {
+        decorators.push(MaxDate(options.maxDate.value, { each: options.isArray, message: options.maxDate.message }));
+      }
     }
   }
 

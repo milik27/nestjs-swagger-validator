@@ -90,6 +90,16 @@ quantity: number;
 percent: number;
 ```
 
+### Date
+
+```typescript
+@ApiProperty({ type: 'date', example: '2024-01-01T00:00:00Z' })
+createdAt: Date;
+
+@ApiProperty({ type: 'date', minDate: new Date('2020-01-01'), maxDate: new Date('2030-01-01') })
+eventDate: Date;
+```
+
 ### Boolean
 
 ```typescript
@@ -147,7 +157,7 @@ nickname?: string | null;
 
 ## Custom Error Messages
 
-Type validators (`IsString`, `IsNumber`, `IsBoolean`, `IsObject`) use `typeMessage`:
+Type validators (`IsString`, `IsNumber`, `IsBoolean`, `IsDate`, `IsObject`) use `typeMessage`:
 
 ```typescript
 @ApiProperty({ type: 'string', typeMessage: 'Must be a string' })
@@ -158,6 +168,9 @@ age: number;
 
 @ApiProperty({ type: 'boolean', typeMessage: 'Must be true or false' })
 isActive: boolean;
+
+@ApiProperty({ type: 'date', typeMessage: 'Must be a valid date' })
+createdAt: Date;
 ```
 
 All boolean validators (`isEmail`, `isUrl`, `isPhone`, `isDate`, `isPositive`, `isInt`, `isNotEmpty`) accept an object with a `message` property:
@@ -194,6 +207,17 @@ name: string;
   max: { value: 100, message: 'Must be at most 100' },
 })
 percent: number;
+```
+
+Date range validators (`minDate`, `maxDate`) accept a `value`/`message` object:
+
+```typescript
+@ApiProperty({
+  type: 'date',
+  minDate: { value: new Date('2020-01-01'), message: 'Must be after 2020' },
+  maxDate: { value: new Date('2030-01-01'), message: 'Must be before 2030' },
+})
+eventDate: Date;
 ```
 
 Regex matching with a custom message:

@@ -34,6 +34,12 @@ export type BooleanOptions = BaseOptions & {
   type: 'boolean';
 };
 
+export type DateOptions = BaseOptions & {
+  type: 'date';
+  minDate?: Date | { value: Date; message?: string };
+  maxDate?: Date | { value: Date; message?: string };
+};
+
 export type ObjectOptions = BaseOptions & {
   type: 'object';
 };
@@ -60,6 +66,7 @@ export type ApiPropertyOptions =
   | StringOptions
   | NumberOptions
   | BooleanOptions
+  | DateOptions
   | ObjectOptions
   | EnumOptions
   | ClassOptions
